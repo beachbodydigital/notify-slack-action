@@ -101,6 +101,7 @@ const getWorkflowUrl = async (repo: string, name: string) => {
 
 const parseActionButtons = (value: string) => {
   try {
+    if (!value) return []
     return JSON.parse(value) as { text: string; url: string }[]
   } catch {
     throw new Error("Invalid JSON format for action_buttons input.")
