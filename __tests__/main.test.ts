@@ -1,3 +1,5 @@
+import { stringify } from "querystring"
+
 const env = process.env
 
 beforeEach(() => {
@@ -24,6 +26,7 @@ const buildPayload = async (env?: Record<string, string>) => {
   const fn = require("../src/main").buildPayload
 
   const rep = await fn()
+  // strigify rep
   return JSON.parse(rep)
 }
 
