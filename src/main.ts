@@ -141,10 +141,7 @@ export const buildPayload = async () => {
 
   const actions = actionButtons.map((button) => ({
     type: "button",
-    text: {
-      type: "plain_text",
-      text: button.text,
-    },
+    text: button.text,
     url: button.url,
   }))
 
