@@ -62,7 +62,7 @@ inputs:
     required: false
     default: ":fast_forward:"
   action_buttons:
-    description: Specify action buttons in JSON format (e.g., [{"text": "Retry", "url": "https://example.com/retry"}])
+    description: 'Specify action buttons in JSON format (e.g., [{"text": "Retry", "url": "https://example.com/retry"}])'
     required: false
     default: "[]"
 
