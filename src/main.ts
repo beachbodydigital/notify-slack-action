@@ -1,5 +1,6 @@
-import { getInput, setFailed } from "@actions/core"
+import { error, getInput, info, setFailed } from "@actions/core"
 import { context } from "@actions/github"
+import type { MessageAttachment } from "@slack/types"
 import { WebClient } from "@slack/web-api"
 import fetch from "node-fetch"
 
@@ -140,12 +141,12 @@ export const buildPayload = async () => {
   const actionButtons = parseActionButtons(getInput("action_buttons"))
 
   const actions = actionButtons.map((button) => ({
-    type: "button",
+    type: "button" as const,
     text: button.text,
     url: button.url,
   }))
 
-  const attachment: Attachment = {
+  const attachment: MessageAttachment = {
     text: text,
     fallback: title,
     pretext: title,
@@ -156,10 +157,6 @@ export const buildPayload = async () => {
   }
 
   return attachment
-}
-
-interface Attachment {
-  [key: string]: any
 }
 
 const sendSlackMessageWithWebhook = async (webhookUrl: string, payload: string) => {
@@ -176,7 +173,7 @@ const sendSlackMessageWithWebhook = async (webhookUrl: string, payload: string) 
   }
 }
 
-const sendSlackMessageWithToken = async (token: string, payload: Attachment) => {
+const sendSlackMessageWithToken = async (token: string, payload: MessageAttachment) => {
   const web = new WebClient(token)
   const result = await web.chat.postMessage({
     attachments: [payload],
@@ -184,13 +181,13 @@ const sendSlackMessageWithToken = async (token: string, payload: Attachment) => 
   })
 
   if (result.ok) {
-    console.log(`Message sent to Slack: ${result.ts}`)
+    info(`Message sent to Slack: ${result.ts}`)
   } else {
-    console.error(`Failed to send message to Slack: ${result.error}`)
+    error(`Failed to send message to Slack: ${result.error}`)
   }
 }
 
-const notifySlack = async (payload: Attachment) => {
+const notifySlack = async (payload: MessageAttachment) => {
   const slackWebhookUrl = process.env.SLACK_WEBHOOK_URL || undefined
   const slackBotToken = process.env.SLACK_BOT_TOKEN || undefined
 

@@ -3,14 +3,15 @@
   "extends": ["plugin:github/recommended", "plugin:@typescript-eslint/recommended"],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
-    "ecmaVersion": 9,
+    "ecmaVersion": 2022,
     "sourceType": "module",
     "project": "./tsconfig.json"
   },
   "rules": {
     "no-unused-vars": "off",
     "camelcase": "off",
-    "object-shorthand": "off"
+    "object-shorthand": "off",
+    "i18n-text/no-en": "off"
   },
   "env": {
     "node": true,
